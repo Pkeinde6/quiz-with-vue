@@ -34,8 +34,11 @@ Ce projet illustre comment créer une application Vue modulaire et réactive, av
 
 .
 ├── public/
+
 │ ├── favicon.ico
+
 │ └── quiz.json # Données du quiz
+
 ├── src/
 │ ├── components/
 │ │ ├── progress.vue # Barre de progression
