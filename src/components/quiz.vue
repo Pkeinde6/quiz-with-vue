@@ -8,21 +8,57 @@
         <Progress :max="quiz.questions.length" :current="current + 1" />
       </div>
 
-      <div class="ombre" v-if="etape === 'question' && task">
-        <Question :task="task" @answer="addAnswer" />
-      </div>
+      <Transition name="fade" mode="out-in">
+        <div class="ombre" v-if="etape === 'question' && task" :key="current">
+          <Question :task="task" @answer="addAnswer" />
+        </div>
+      </Transition>
     </div>
 
-    <div v-if="etape === 'result'" class="text-center mt-5">
-      <h2 class="text-success">Résultats</h2>
-      <p class="fs-4">Note : <strong>{{ note }}</strong> / {{ quiz.questions.length }}</p>
+    <div v-if="etape === 'result'" class="results-container">
+      <h2>🎯 Résultats</h2>
+      <div class="score-display">
+        <span class="score-value">{{ note }}</span>
+        <span class="score-total">/ {{ quiz.questions.length }}</span>
+      </div>
+      <div class="score-percentage">
+        {{ Math.round((note / quiz.questions.length) * 100) }}% de réussite
+      </div>
 
       <div v-if="note >= quiz.minimum_score" class="alert alert-success">
-        {{ quiz.success_message }}
+        🎉 {{ quiz.success_message }}
       </div>
       <div v-else class="alert alert-danger">
-        {{ quiz.failure_message }}
+        😔 {{ quiz.failure_message }}
       </div>
+
+      <div class="detailed-results">
+        <h3>Détails des réponses</h3>
+        <div 
+          v-for="(question, index) in quiz.questions" 
+          :key="index"
+          class="result-item"
+        >
+          <div class="result-header">
+            <span class="result-icon">
+              {{ answers[index] === question.correct_answer ? '✅' : '❌' }}
+            </span>
+            <span class="result-question">{{ question.question }}</span>
+          </div>
+          <div class="result-details">
+            <div v-if="answers[index] !== question.correct_answer && answers[index] !== null" class="your-answer">
+              Votre réponse : <strong>{{ answers[index] }}</strong>
+            </div>
+            <div class="correct-answer">
+              Bonne réponse : <strong>{{ question.correct_answer }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn restart-btn" @click="restartQuiz">
+        🔄 Recommencer le quiz
+      </button>
     </div>
   </div>
 </template>
@@ -71,6 +107,12 @@ const addAnswer = (answer) => {
     current.value++;
   }
 };
+
+const restartQuiz = () => {
+  current.value = 0;
+  answers.value = props.quiz.questions.map(() => null);
+  etape.value = 'question';
+};
 </script>
 <style scoped>
 * {
@@ -86,7 +128,7 @@ const addAnswer = (answer) => {
   padding: 2rem;
   border-radius: 16px;
   background: #ffffff;
-  border: soloid 1px #000000;
+  border: solid 1px #000000;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.434), 0 8px 24px rgba(0, 0, 0, 0.12);
   transition: all 0.3s ease-in-out;
 }
@@ -209,6 +251,111 @@ input[type="radio"] {
   border-radius: 10px;
   border: 1px solid #f5bcbc;
   margin-top: 1rem;
+}
+
+.results-container {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.score-display {
+  margin: 1.5rem 0;
+}
+
+.score-value {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #8e80ff;
+}
+
+.score-total {
+  font-size: 2rem;
+  color: #666;
+  margin-left: 0.5rem;
+}
+
+.score-percentage {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.detailed-results {
+  margin: 2rem 0;
+  text-align: left;
+}
+
+.detailed-results h3 {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.result-item {
+  background: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+}
+
+.result-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.result-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.result-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.result-question {
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+}
+
+.result-details {
+  margin-left: 2.25rem;
+  font-size: 0.95rem;
+}
+
+.your-answer {
+  color: #c0392b;
+  margin-bottom: 0.25rem;
+}
+
+.correct-answer {
+  color: #14866d;
+}
+
+.restart-btn {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  padding: 0.8rem 2rem;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
 }
 
 </style>

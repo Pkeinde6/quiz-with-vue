@@ -33,6 +33,7 @@ onMounted(()=>{
     })
     .catch(error => {
       console.error(error);
+      state.value = 'error';
     })
 })
 
