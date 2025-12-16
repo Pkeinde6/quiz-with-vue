@@ -20,7 +20,7 @@
             name="answer"
             :value="choice"
             v-model="selected"
-            :aria-label="choice"
+            :aria-label="`Option: ${choice}`"
           />
           <span class="choice-text">{{ choice }}</span>
         </label>

@@ -46,7 +46,7 @@
             <span class="result-question">{{ question.question }}</span>
           </div>
           <div class="result-details">
-            <div v-if="answers[index] !== question.correct_answer" class="your-answer">
+            <div v-if="answers[index] !== question.correct_answer && answers[index] !== null" class="your-answer">
               Votre réponse : <strong>{{ answers[index] }}</strong>
             </div>
             <div class="correct-answer">

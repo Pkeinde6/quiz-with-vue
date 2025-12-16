@@ -25,7 +25,7 @@ const props = defineProps({
 });
 
 const progressPercentage = computed(() => {
-    return (props.current / props.max) * 100;
+    return props.max > 0 ? (props.current / props.max) * 100 : 0;
 });
 
 </script>
