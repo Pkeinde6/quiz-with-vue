@@ -1,6 +1,6 @@
 {
   "title": "Questionnaire sur les Films et Séries",
-  "minimum_score": 4,
+  "minimum_score": 6,
   "success_message": "Félicitations! Vous êtes un véritable cinéphile!",
   "failure_message": "Dommage! Vous devriez regarder plus de films et séries.",
   "questions": [
@@ -43,6 +43,31 @@
         "Tom Hiddleston"
       ],
       "correct_answer": "Benedict Cumberbatch"
+    },
+    {
+      "question": "Dans quelle saga trouve-t-on le personnage de Neo?",
+      "choices": ["Matrix", "Star Wars", "Blade Runner", "Tron"],
+      "correct_answer": "Matrix"
+    },
+    {
+      "question": "Quel film a remporté l'Oscar du meilleur film en 2020?",
+      "choices": ["Parasite", "1917", "Joker", "Once Upon a Time in Hollywood"],
+      "correct_answer": "Parasite"
+    },
+    {
+      "question": "Dans quelle série trouve-t-on les personnages de Ross, Rachel et Monica?",
+      "choices": ["Friends", "How I Met Your Mother", "Seinfeld", "The Big Bang Theory"],
+      "correct_answer": "Friends"
+    },
+    {
+      "question": "Qui a réalisé le film 'Inception'?",
+      "choices": ["Christopher Nolan", "Steven Spielberg", "James Cameron", "Quentin Tarantino"],
+      "correct_answer": "Christopher Nolan"
+    },
+    {
+      "question": "Quelle série se déroule dans la ville fictive de Hawkins?",
+      "choices": ["Stranger Things", "The Walking Dead", "Twin Peaks", "Riverdale"],
+      "correct_answer": "Stranger Things"
     }
   ]
 }
